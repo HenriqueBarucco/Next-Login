@@ -16,6 +16,7 @@ const authOptions = (req, res) => {
                             }
                         );
 
+                        console.log(response.data);
                         return response.data;
                     } catch (error) {
                         if (error.response == undefined) {

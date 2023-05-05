@@ -61,7 +61,7 @@ export default function SignIn() {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         await signIn("credentials", {
-            username: data.get("email"),
+            email: data.get("email"),
             password: data.get("password"),
             callbackUrl: "/",
         });
@@ -130,9 +130,9 @@ export default function SignIn() {
                                 margin="normal"
                                 required
                                 fullWidth
-                                id="username"
+                                id="password"
                                 label="Senha"
-                                name="username"
+                                name="password"
                                 autoComplete="current-username"
                                 autoFocus
                                 style={{
