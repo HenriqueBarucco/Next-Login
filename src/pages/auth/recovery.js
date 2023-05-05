@@ -6,9 +6,9 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
-import Image from "next/image";
+import Link from "next/link";
+import axios from "axios";
 const theme = createTheme({
     palette: {
         primary: {
@@ -27,16 +27,16 @@ const theme = createTheme({
             styleOverrides: {
                 root: {
                     "& .MuiInputBase-root": {
-                        color: "white",
+                        color: "#808080",
                     },
                     "& label": {
                         color: "white",
                     },
-                    "& .MuiOutlinedInput-notchedOutline": {
-                        borderColor: "#8c8c8c",
+                    "& .MuiInput-underline:before": {
+                        borderBottomColor: "#e6e6e6",
                     },
-                    "&:hover .MuiOutlinedInput-notchedOutline": {
-                        borderColor: "#660066",
+                    "&:hover .MuiInput-underline:before": {
+                        borderBottomColor: "#aa19aa",
                     },
                 },
             },
@@ -54,19 +54,20 @@ const styles = {
     },
 };
 
-export default function SignIn() {
+export default function Recovery() {
     const router = useRouter();
     const error = router.query.error;
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log(data);
-        await signIn("credentials", {
-            username: data.get("username"),
-            password: data.get("password"),
-            callbackUrl: "/",
-        });
+        const response = await axios.post(
+            `${process.env.AUTH_API}/auth/recovery`,
+            {
+                name: data.get("name"),
+                email: data.get("email"),
+            }
+        );
     };
 
     return (
@@ -78,7 +79,7 @@ export default function SignIn() {
                     sx={{
                         display: "block",
                         width: "100%",
-                        background: "#000066",
+                        background: "#0a0362",
                         padding: "25px",
                         borderRadius: "5px",
                     }}
@@ -90,13 +91,15 @@ export default function SignIn() {
                             display: "flex",
                             flexDirection: "column",
                             alignItems: "center",
+                            textAlign: "center",
+                            padding: "0px 25px 0px 25px",
                         }}
                     >
                         <Typography
                             variant="h4"
                             textAlign="center"
                             fontWeight={800}
-                            color={"#aa19aa"}
+                            color={"#7623ac"}
                         >
                             ESQUECEU SUA SENHA?
                         </Typography>
@@ -107,13 +110,14 @@ export default function SignIn() {
                             sx={{ mt: 1 }}
                         >
                             <TextField
+                                variant="standard"
                                 margin="normal"
                                 required
                                 fullWidth
-                                id="username"
-                                label="E-Mail"
-                                name="username"
-                                autoComplete="current-username"
+                                id="name"
+                                label="Nome Completo"
+                                name="name"
+                                autoComplete="current-name"
                                 autoFocus
                                 style={{
                                     color: "white",
@@ -124,13 +128,14 @@ export default function SignIn() {
                                 }}
                             />
                             <TextField
+                                variant="standard"
                                 margin="normal"
                                 required
                                 fullWidth
-                                id="username"
-                                label="Senha"
-                                name="username"
-                                autoComplete="current-username"
+                                id="email"
+                                label="E-Mail"
+                                name="email"
+                                autoComplete="current-email"
                                 autoFocus
                                 style={{
                                     color: "white",
@@ -140,28 +145,28 @@ export default function SignIn() {
                                     style: { color: "white" },
                                 }}
                             />
-                            <Typography variant="subtitle1" textAlign="center">
-                                {error == 403
-                                    ? "Usuário ou senha inválido."
-                                    : error == 404
-                                    ? "API indisponível."
-                                    : null}
-                            </Typography>
                             <Button
                                 type="submit"
-                                fullWidth
                                 variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
+                                sx={{
+                                    mt: 3,
+                                    mb: 2,
+                                    backgroundColor: "#8dc111",
+                                }}
+                                onClick={handleSubmit}
                             >
                                 Recuperar Senha
                             </Button>
-                            <Typography
-                                variant="subtitle1"
-                                textAlign="center"
-                                color={"white"}
-                            >
-                                Não tem uma conta? Cadastre-se
-                            </Typography>
+                            <Link href={"/auth/signup"}>
+                                <Typography
+                                    variant="subtitle1"
+                                    textAlign="center"
+                                    color={"#8c8c8c"}
+                                    fontWeight={100}
+                                >
+                                    Não tem uma conta? Cadastre-se
+                                </Typography>
+                            </Link>
                             <Typography
                                 variant="caption"
                                 textAlign="center"

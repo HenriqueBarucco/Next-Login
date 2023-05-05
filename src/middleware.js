@@ -6,7 +6,6 @@ export default withAuth({
             req.nextUrl.pathname?.slice(0, 5) === "/api/" ||
             req.nextUrl.pathname === "/auth/login" ||
             req.nextUrl.pathname === "/auth/recovery" ||
-            req.nextUrl.pathname === "/logo.webp" ||
             req.nextUrl.pathname === "/favicon.ico" ||
             !!token,
     },

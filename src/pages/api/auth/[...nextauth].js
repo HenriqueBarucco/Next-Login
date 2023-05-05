@@ -1,7 +1,6 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import axios from "axios";
-import { setCookie } from "nookies";
 
 const authOptions = (req, res) => {
     return {
@@ -9,25 +8,15 @@ const authOptions = (req, res) => {
             CredentialsProvider({
                 async authorize(credentials) {
                     try {
-                        /* const response = await axios.post(
-                            `${process.env.IEPT_API}/auth/login`,
+                        const response = await axios.post(
+                            `${process.env.AUTH_API}/auth/login`,
                             {
-                                username: credentials.username,
+                                email: credentials.email,
                                 password: credentials.password,
                             }
                         );
 
-                        setCookie(
-                            { res },
-                            "session",
-                            JSON.stringify(response.data),
-                            {
-                                maxAge: 1 * 24 * 60 * 60,
-                                path: "/",
-                            }
-                        ); */
-                        return { name: "Henrique" };
-                        //return response.data;
+                        return response.data;
                     } catch (error) {
                         if (error.response == undefined) {
                             throw new Error(404);
