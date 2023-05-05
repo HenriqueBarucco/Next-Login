@@ -46,7 +46,9 @@ const theme = createTheme({
 
 const styles = {
     container: {
-        background: "white",
+        backgroundImage: "radial-gradient(#d1d1d1 1px, transparent 1px)",
+        backgroundSize: "21px 21px",
+        backgroundColor: "#e6e6e6",
         display: "flex",
         alignItems: "center",
         height: "100vh",

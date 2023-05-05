@@ -12,7 +12,7 @@ import Link from "next/link";
 const theme = createTheme({
     palette: {
         primary: {
-            main: "#ffffff",
+            main: "#808080",
         },
         secondary: {
             main: "#ffffff",
@@ -46,7 +46,9 @@ const theme = createTheme({
 
 const styles = {
     container: {
-        background: "white",
+        backgroundImage: "radial-gradient(#d1d1d1 1px, transparent 1px)",
+        backgroundSize: "21px 21px",
+        backgroundColor: "#e6e6e6",
         display: "flex",
         alignItems: "center",
         height: "100vh",
@@ -55,8 +57,6 @@ const styles = {
 };
 
 export default function SignIn() {
-    const router = useRouter();
-
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -77,6 +77,7 @@ export default function SignIn() {
                         display: "block",
                         width: "100%",
                         background: "#0a0362",
+                        shadow: "0px 0px 10px 0px rgba(0,0,0,0.75)",
                         padding: "25px",
                         borderRadius: "5px",
                     }}
@@ -163,7 +164,7 @@ export default function SignIn() {
                                 <Typography
                                     variant="subtitle1"
                                     textAlign="center"
-                                    color={"white"}
+                                    color={"#8c8c8c"}
                                 >
                                     Não tem uma conta? Cadastre-se
                                 </Typography>
